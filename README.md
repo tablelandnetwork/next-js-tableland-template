@@ -1,34 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NextJS + Tableland (JavaScript) Starter
 
-## Getting Started
+> A JavaScript template for @tableland + NextJS + wagmi + Rainbowkit projects
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- [Table of Contents](#table-of-contents)
+- [Background](#background)
+- [Usage](#usage)
+  - [Prerequisites](#prerequisites)
+  - [Installation \& build](#installation--build)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Background
+
+This repo contains starter code for a [NextJS](https://nextjs.org/docs) + [wagmi](https://wagmi.sh/) + [Rainbowkit](https://www.rainbowkit.com/) project with useful Tableland clients included, bootstrapped using [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app). It contains a basic example for connecting to a wallet to then allow creating, writing to, and reading a table using the Tableland SDK ([`@tableland/js-tableland)`](https://github.com/tablelandnetwork/js-tableland)) as well as Local Tableland ([`@tableland/local`](https://github.com/tablelandnetwork/local-tableland)) support during development. Both linting (with [`eslint`](https://eslint.org/)) and code formatting (with [`prettier`](https://prettier.io/)) are also included, along with [Tailwind CSS](https://tailwindcss.com/).
+
+## Usage
+
+### Prerequisites
+
+Before you get started, you'll need to do the following:
+
+- Create an Alchemy account and get an API key: [here](https://www.alchemy.com/)
+- Create a WalletConnect account and create a project and retrieve the project ID: [here](https://walletconnect.com/)
+
+Alchemy is used as an EVM node provider, and RainbowKit/wagmi require a WalletConnect project ID in order to work properly. These should be set up and configured in a `.env` file within this project's root and saved to the following variables:
+
+```txt
+NEXT_PUBLIC_ALCHEMY_API_KEY=your_alchemy_api_key
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_wallet_connect_project_id
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+There's also a `NEXT_PUBLIC_ENABLE_TESTNETS` boolean value you can set in order to enable or disable wallet connections to testnet chains. All of the chains that Tableland supports are configured, including the Hardhat chain if you choose to run Local Tableland during development.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation & build
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+First, clone this repo:
 
-## Learn More
+```sh
+git clone https://github.com/tablelandnetwork/next-js-tableland-template
+```
 
-To learn more about Next.js, take a look at the following resources:
+To get started, you can run `npm run up` to start the app. This runs `npm install` plus the `build` / `start` scripts and then serves the application at [http://localhost:3000](http://localhost:3000). The starter template includes the following, located in `src/components/Tableland.jsx`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Navbar wallet connection using RainbowKit.
+- A form with inputs for creating a table (hardcoded with a `id INTEGER PRIMARY KEY, val TEXT` schema) and writing a single value to it.
+- Reading and rendering your table's data on button click.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The wagmi setup occurs in `src/app/providers` and `src/wagmi.js`. Lastly, there is a `useSigner` hook in `src/hooks/useSigner.js`. It's a required adapter for [`ethers`](https://docs.ethers.org/v5/) to work with wagmi (and RainbowKit), which use [`viem`](https://viem.sh/) under the hood.
 
-## Deploy on Vercel
+## Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you'd like to run the project locally, use the following scripts in separate terminal windows:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+npm run lt
+npm run dev
+```
+
+This will do two things: spin up a Local Tableland node and run the app in development mode to reflect live code changes. Local Tableland is an _extremely_ useful tool to develop as it's a lightweight Tableland validator (also spinning up a Hardhat node under the hood) that runs locally on your machine with full Tableland protocol compliance.
+
+There are also a few other scripts you can use:
+
+- `npm run lint`: Lint the codebase with `eslint` (along with the `lint:fix` option).
+- `npm run prettier`: Prettify the code format with `prettier` (along with the `prettier:fix` option).
+- `npm run format`: Both lint and format the codebase with `eslint` and `prettier`, also fixing any issues it can.
+- `npm run clean`: Remove the `.next` folder.
+- `npm run test`: A placeholder for running tests (currently empty).
+
+## Contributing
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the
+[standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+MIT AND Apache-2.0, © 2021-2023 Tableland Network Contributors
