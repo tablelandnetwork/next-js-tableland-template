@@ -1,5 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Tableland } from "../components/Tableland";
+import { Tableland } from "@/components/Tableland";
 import Image from "next/image";
 import "./globals.css";
 
@@ -11,8 +11,9 @@ export default function Home() {
           <Image
             src="/logo.svg"
             alt="Tableland Logo"
-            width={200}
-            height={48}
+            width={0}
+            height={0}
+            style={{width:'200px', height: "auto" }}
             priority
           />
         </h1>

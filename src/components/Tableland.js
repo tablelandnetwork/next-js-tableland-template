@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Database } from "@tableland/sdk";
-import { useSigner } from "../hooks/useSigner";
+import { useSigner } from "@/hooks/useSigner";
 
 // A component with form inputs to to create a table, write data to it, and read data from it
 export function Tableland() {
